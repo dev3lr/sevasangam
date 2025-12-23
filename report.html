@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report an Issue | SevaSangam</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="container header-flex">
+  
+      <div class="brand">
+        <img src="logo.png" alt="SevaSangam Logo">
+        <span>SevaSangam</span>
+      </div>
+  
+
+  </header>
+
+<div class="container">
+
+  <!-- LOGIN STEP -->
+  <div id="loginBox" class="card">
+    <h2>Login to Continue</h2>
+    <p>Enter your mobile number to report an issue.</p>
+
+    <input type="tel" id="phoneInput" placeholder="Mobile Number" />
+    <button onclick="loginUser()" class="btn-primary">Continue</button>
+  </div>
+
+  <!-- REPORT FORM -->
+  <div id="reportBox" class="card hidden">
+    <h2>Report an Issue</h2>
+
+    <input type="text" id="location" placeholder="Location (City / Area)" />
+    <input type="date" id="date" />
+
+    <textarea id="issue" placeholder="Describe the issue"></textarea>
+
+    <input type="email" id="email" placeholder="Email (optional)" />
+
+    <textarea id="support" placeholder="What help or funds can you provide? (optional)"></textarea>
+
+    <button onclick="submitReport()" class="btn-primary">
+      Submit Report
+    </button>
+  </div>
+
+</div>
+
+<script src="report.js"></script>
+</body>
+</html>

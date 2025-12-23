@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SevaSangam</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="container header-flex">
+
+    <div class="brand">
+      <img src="logo.png" alt="SevaSangam Logo">
+      <span>SevaSangam</span>
+    </div>
+
+    <nav class="nav desktop-nav">
+      <a href="#services">Services</a>
+      <a href="#how">How It Works</a>
+      <a href="#about">About</a>
+    <!-- <a href="login.html" class="nav-btn">Login</a>--> 
+    </nav>
+
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+  </div>
+
+  <!-- MOBILE NAV -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#services">Services</a>
+    <a href="#how">How It Works</a>
+    <a href="#about">About</a>
+    <a href="login.html">Login</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="container">
+    <h1>A National Platform for Seva & Social Action</h1>
+    <p>
+      SevaSangam enables citizens to report issues and connects them
+      with verified NGOs to ensure timely, transparent, and responsible action.
+    </p>
+
+    <div class="hero-actions">
+      <a href="report.html" class="btn-primary">Report an Issue</a>
+      <a href="ngo-login.html" class="btn-outline">NGO Partner Portal</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="services" id="services">
+  <div class="container">
+    <h2>Service Domains</h2>
+
+    <div class="services-grid">
+      <div class="service">Animal Rescue & Care</div>
+      <div class="service">Animal Shelter Support</div>
+      <div class="service">Road Cleaning</div>
+      <div class="service">Pothole & Road Safety</div>
+      <div class="service">Food for Underprivileged</div>
+      <div class="service">Emergency Assistance</div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ================= CURRENT REPORTS ================= -->
+<section class="reports">
+  <div class="container">
+    <h2>Current Public Reports</h2>
+    <p class="reports-subtext">
+      Live view of issues reported by citizens across regions.
+      Transparency ensures accountability.
+    </p>
+
+    <div class="report-row header">
+      <span>Issue</span>
+      <span>Location</span>
+      <span>Status</span>
+      <span>NGO</span>
+    </div>
+    
+    <div id="reportsContainer"></div>
+    
+
+    <div class="reports-footer">
+      <a href="reports.html" class="btn-outline">
+        View All Reports
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+<section class="how-it-works" id="how">
+  <div class="container">
+    <h2>How SevaSangam Works</h2>
+
+    <div class="steps">
+      <div class="step">
+        <span>1</span>
+        <p>Citizens report an issue with location & photo</p>
+      </div>
+      <div class="step">
+        <span>2</span>
+        <p>Issue is routed to the relevant verified NGO</p>
+      </div>
+      <div class="step">
+        <span>3</span>
+        <p>NGO takes action and updates the status</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about" id="about">
+  <div class="container">
+    <h2>About SevaSangam</h2>
+    <p>
+      SevaSangam is a neutral, service-driven digital initiative designed
+      to strengthen civic participation and NGO collaboration.
+      The platform focuses on accountability, dignity, and collective responsibility.
+    </p>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container">
+    <p>© 2025 SevaSangam • A Platform for Collective Service</p>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById("mobileNav").classList.toggle("open");
+}
+
+
+
+const reportsContainer = document.getElementById("reportsContainer");
+  const reports = JSON.parse(localStorage.getItem("reports")) || [];
+
+  if (reports.length === 0) {
+    reportsContainer.innerHTML = `
+      <div class="report-row">
+        <span>No reports yet</span>
+        <span>—</span>
+        <span>—</span>
+        <span>—</span>
+      </div>
+    `;
+  } else {
+    reports.reverse().forEach(report => {
+      const row = document.createElement("div");
+      row.className = "report-row";
+
+      row.innerHTML = `
+        <span data-label="Issue">${report.issue}</span>
+        <span data-label="Location">${report.location}</span>
+        <span data-label="Status" class="status pending">${report.status}</span>
+        <span data-label="NGO">${report.assignedNgo}</span>
+      `;
+
+      reportsContainer.appendChild(row);
+    });
+  }
+</script>
+
+</body>
+</html>

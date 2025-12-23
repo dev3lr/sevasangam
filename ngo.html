@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NGO Dashboard | SevaSangam</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container header-flex">
+      
+          <div class="brand">
+            <img src="logo.png" alt="SevaSangam Logo">
+            <span>SevaSangam</span>
+          </div>
+      
+    
+      </header>
+<!-- SECURITY CHECK -->
+<script>
+  const loggedNgo = localStorage.getItem("loggedInNgo");
+  if (!loggedNgo) {
+    alert("Please login as NGO");
+    window.location.href = "ngo-login.html";
+  }
+</script>
+
+<div class="container">
+
+    <div class="ngo-header">
+      <h2>NGO Dashboard</h2>
+      <p>Logged in as: <b><span id="ngoName"></span></b></p>
+    </div>
+  
+    <div class="ngo-section">
+      <h3>Open Reports</h3>
+      <p>Reports available for NGOs to volunteer</p>
+      <div id="openReports"></div>
+    </div>
+  
+    <div class="ngo-section">
+      <h3>My Assigned Reports</h3>
+      <p>Reports officially assigned to your NGO</p>
+      <div id="assignedReports"></div>
+    </div>
+  
+  </div>
+  
+
+<script src="ngo.js"></script>
+</body>
+</html>
