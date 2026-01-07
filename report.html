@@ -21,34 +21,85 @@
 <div class="container">
 
   <!-- LOGIN STEP -->
-  <div id="loginBox" class="card">
-    <h2>Login to Continue</h2>
-    <p>Enter your mobile number to report an issue.</p>
+<!-- ================= LOGIN STEP ================= -->
+<div id="loginBox" class="card">
+  <h2>Login to Continue</h2>
+  <p>Enter your mobile number to report an issue.</p>
 
-    <input type="tel" id="phoneInput" placeholder="Mobile Number" />
-    <button onclick="loginUser()" class="btn-primary">Continue</button>
+  <input
+    type="text"
+    id="phoneInput"
+    placeholder="Enter 10-digit mobile number"
+  />
+
+  <div id="phoneError" class="login-error hidden">
+    Please enter a valid 10-digit mobile number.
   </div>
 
-  <!-- REPORT FORM -->
-  <div id="reportBox" class="card hidden">
-    <h2>Report an Issue</h2>
+  <button class="btn-primary" onclick="loginUser()">
+    Continue
+  </button>
+</div>
 
-    <input type="text" id="location" placeholder="Location (City / Area)" />
-    <input type="date" id="date" />
+<!-- ================= REPORT STEP ================= -->
+<div id="reportBox" class="card hidden">
+  <h2>Report an Issue</h2>
 
-    <textarea id="issue" placeholder="Describe the issue"></textarea>
+  <input type="text" id="issue" placeholder="Issue title" required />
+  <input type="text" id="location" placeholder="Location" required />
+  <input type="date" id="date" required />
 
-    <input type="email" id="email" placeholder="Email (optional)" />
+  <input type="email" id="email" placeholder="Email (optional)" />
+  <textarea id="support" placeholder="How can you help? (optional)"></textarea>
 
-    <textarea id="support" placeholder="What help or funds can you provide? (optional)"></textarea>
-
-    <button onclick="submitReport()" class="btn-primary">
-      Submit Report
-    </button>
+  <div id="reportError" class="login-error hidden">
+    Please fill all required fields correctly.
   </div>
+
+  <label style="margin-top:12px; display:block;">
+    Attach Image (optional)
+  </label>
+  
+  <input
+    type="file"
+    id="reportImage"
+    accept="image/*"
+  />
+  
+  <img
+    id="imagePreview"
+    class="hidden"
+    style="margin-top:10px; max-width:100%; border-radius:8px;"
+  />
+  
+  <button class="btn-primary" onclick="submitReport()">
+    Submit Report
+  </button>
+</div>
+
 
 </div>
 
 <script src="report.js"></script>
+
+<script>
+  const dateInput = document.getElementById("date");
+
+  function localDateString(offsetDays = 0) {
+    const d = new Date();
+    d.setDate(d.getDate() + offsetDays);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${y}-${m}-${day}`;
+  }
+
+  dateInput.max = localDateString(0);   // today
+  dateInput.min = localDateString(-7);  // last 7 days
+</script>
+
+
+
+
 </body>
 </html>

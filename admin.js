@@ -4,9 +4,18 @@
 
 const adminReportsDiv = document.getElementById("adminReports");
 
-let reports = JSON.parse(localStorage.getItem("reports")) || [];
-
+/* ===============================
+   INITIAL LOAD
+=============================== */
+let reports = loadReports();
 renderAdminReports();
+
+/* ===============================
+   UTIL – LOAD REPORTS
+=============================== */
+function loadReports() {
+  return JSON.parse(localStorage.getItem("reports")) || [];
+}
 
 /* ===============================
    RENDER REPORTS
@@ -30,7 +39,30 @@ function renderAdminReports() {
       <p><b>Status:</b> ${report.status}</p>
       <p><b>Assigned NGO:</b> ${report.assignedNgo || "NA"}</p>
 
-      <div style="margin-top:10px;">
+      ${
+        report.image
+          ? `
+            <div style="margin-top:12px;">
+              <p style="font-weight:500;">Attached Image</p>
+              <a href="${report.image}" target="_blank">
+                <img
+                  src="${report.image}"
+                  alt="Report Image"
+                  style="
+                    max-width:100%;
+                    max-height:180px;
+                    border-radius:8px;
+                    border:1px solid #e5e7eb;
+                    margin-top:6px;
+                  "
+                />
+              </a>
+            </div>
+          `
+          : `<p style="margin-top:8px;"><i>No image attached</i></p>`
+      }
+
+      <div style="margin-top:12px;">
         <button class="btn-outline"
           style="border-color:#dc2626;color:#dc2626;"
           onclick="deleteReport(${reportIndex})">
@@ -91,28 +123,30 @@ function renderNgoRequests(report, reportIndex) {
    APPROVE NGO
 =============================== */
 function approveNgo(reportIndex, reqIndex) {
-  reports[reportIndex].assignedNgo =
-    reports[reportIndex].ngoRequests[reqIndex].ngoName;
+  reports = loadReports();
 
+  const selectedRequest = reports[reportIndex].ngoRequests[reqIndex];
+
+  reports[reportIndex].assignedNgo = selectedRequest.ngoName;
   reports[reportIndex].status = "Assigned";
   reports[reportIndex].ngoRequests = [];
 
-  persist();
-  alert("NGO approved and assigned");
+  persist("NGO approved and assigned");
 }
 
 /* ===============================
    REJECT NGO REQUEST
 =============================== */
 function rejectNgo(reportIndex, reqIndex) {
+  reports = loadReports();
+
   reports[reportIndex].ngoRequests.splice(reqIndex, 1);
 
   if (reports[reportIndex].ngoRequests.length === 0) {
     reports[reportIndex].status = "Reported";
   }
 
-  persist();
-  alert("NGO request rejected");
+  persist("NGO request rejected");
 }
 
 /* ===============================
@@ -121,14 +155,15 @@ function rejectNgo(reportIndex, reqIndex) {
 function deleteNgoRequest(reportIndex, reqIndex) {
   if (!confirm("Delete this NGO request?")) return;
 
+  reports = loadReports();
+
   reports[reportIndex].ngoRequests.splice(reqIndex, 1);
 
   if (reports[reportIndex].ngoRequests.length === 0) {
     reports[reportIndex].status = "Reported";
   }
 
-  persist();
-  alert("NGO request deleted");
+  persist("NGO request deleted");
 }
 
 /* ===============================
@@ -137,17 +172,19 @@ function deleteNgoRequest(reportIndex, reqIndex) {
 function deleteReport(reportIndex) {
   if (!confirm("Delete this entire report permanently?")) return;
 
+  reports = loadReports();
   reports.splice(reportIndex, 1);
 
-  persist();
-  alert("Report deleted");
+  persist("Report deleted");
 }
 
 /* ===============================
-   SAVE & RERENDER
+   SAVE + REFRESH UI
 =============================== */
-function persist() {
+function persist(message) {
   localStorage.setItem("reports", JSON.stringify(reports));
-  reports = JSON.parse(localStorage.getItem("reports")) || [];
+  reports = loadReports();       // 🔑 always re-sync
   renderAdminReports();
+
+  if (message) alert(message);
 }

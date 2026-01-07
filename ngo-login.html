@@ -21,10 +21,15 @@
     <h2>NGO Partner Login</h2>
     <p>Authorized NGO access only</p>
 
-    <input type="text" id="ngoUser" placeholder="NGO Name">
-    <input type="password" id="ngoPass" placeholder="Password">
+    <input type="text" id="ngoUser" placeholder="Username">
+<input type="password" id="ngoPass" placeholder="Password">
 
-    <button class="btn-primary" onclick="ngoLogin()">Login</button>
+<div id="loginError" class="login-error hidden">
+  Invalid credentials. Please try again.
+</div>
+
+<button class="btn-primary" onclick="ngoLogin()">Login</button>
+
   </div>
 </div>
 

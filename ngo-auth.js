@@ -32,5 +32,7 @@ function ngoLogin() {
   }
 
   /* ================= INVALID ================= */
-  alert("Invalid credentials");
+  const errorBox = document.getElementById("loginError");
+  errorBox.classList.remove("hidden");
+  
 }
